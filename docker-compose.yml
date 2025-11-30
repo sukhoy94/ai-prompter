@@ -9,10 +9,7 @@ services:
       - NODE_ENV=development
     volumes:
       - ./data:/app/data
-      - ./app:/app/app
-      - ./components:/app/components
-      - ./lib:/app/lib
-      - ./public:/app/public
+      - .:/app
       - /app/node_modules
       - /app/.next
     restart: unless-stopped
