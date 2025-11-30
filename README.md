@@ -2,6 +2,18 @@
 
 A web application for configuring and managing AI agent prompts. Choose from 9 AI roles, multiple languages, and execution options. Built with Next.js, React, and Tailwind CSS.
 
+## Screenshots
+
+<div align="center">
+  <img src="./docs/configs_list.jpeg" alt="Configurations List" width="600">
+  <p><em>Configuration List - View and manage all your saved prompt configurations</em></p>
+</div>
+
+<div align="center">
+  <img src="./docs/configuration.jpeg" alt="Configuration Form" width="600">
+  <p><em>Configuration Form - Create and customize AI prompts with multiple options</em></p>
+</div>
+
 ## Features
 
 - 🎯 **9 AI Agent Roles**: Architect, Engineer, PHP/Laravel/Frontend/Backend Developer, DevOps, QA, Project Manager
