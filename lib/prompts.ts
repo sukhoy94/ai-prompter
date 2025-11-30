@@ -191,7 +191,7 @@ export interface ExecutionOptions {
 }
 
 export interface PromptOptions extends ExecutionOptions {
-  focus: string
+  focus: string[]
   max_tokens: number
 }
 
@@ -297,10 +297,18 @@ export function buildFullPrompt(
     prompt += "\n\n" + t.header + "\n" + executionInstructions.join("\n")
   }
 
-  // Add Focus instruction
-  const focusKey = options.focus as keyof typeof focusGuide
-  if (focusKey && focusGuide[focusKey]) {
-    prompt += "\n\n" + focusGuide[focusKey]
+  // Add Focus instructions
+  if (options.focus && options.focus.length > 0) {
+    const focusInstructions = options.focus
+      .map((focus) => {
+        const focusKey = focus as keyof typeof focusGuide
+        return focusGuide[focusKey]
+      })
+      .filter((instruction) => instruction !== undefined)
+
+    if (focusInstructions.length > 0) {
+      prompt += "\n\n" + focusInstructions.join("\n")
+    }
   }
 
   // Add Token guideline

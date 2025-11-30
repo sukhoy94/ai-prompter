@@ -5,7 +5,7 @@ A web application for configuring and managing AI agent prompts. Choose from 9 A
 ## Screenshots
 
 <div align="center">
-  <img src="./docs/configs_list.jpeg" alt="Configurations List" width="600">
+  <img src="./docs/configs_list.png" alt="Configurations List" width="600">
   <p><em>Configuration List - View and manage all your saved prompt configurations</em></p>
 </div>
 

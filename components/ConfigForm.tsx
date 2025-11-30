@@ -64,7 +64,7 @@ export default function ConfigForm({
     prompt_language: 'English',
     response_language: 'English',
     max_tokens: 2000,
-    focus: 'Explanation',
+    focus: ['Explanation'],
     modify_files: false,
     plan_first: true,
     run_commands: false,
@@ -123,13 +123,12 @@ export default function ConfigForm({
       // User is editing the prompt directly
       setFormData((prev) => ({ ...prev, [name]: value }))
       setPromptEdited(true)
-    } else if (name === 'role' || name === 'prompt_language' || name === 'max_tokens' || name === 'focus') {
-      // Auto-generate prompt based on role, language, tokens, or focus
+    } else if (name === 'role' || name === 'prompt_language' || name === 'max_tokens') {
+      // Auto-generate prompt based on role, language, or tokens
       setFormData((prev) => {
         const newRole = name === 'role' ? value : prev.role
         const newPromptLang = name === 'prompt_language' ? value : prev.prompt_language
         const newMaxTokens = name === 'max_tokens' ? parseInt(value) : prev.max_tokens
-        const newFocus = name === 'focus' ? value : prev.focus
         const newPrompt = !promptEdited
           ? buildFullPrompt(newPromptLang, newRole, {
               modify_files: prev.modify_files,
@@ -137,7 +136,7 @@ export default function ConfigForm({
               run_commands: prev.run_commands,
               make_commit: prev.make_commit,
               mention_ai: prev.mention_ai,
-              focus: newFocus,
+              focus: prev.focus,
               max_tokens: newMaxTokens,
             })
           : prev.prompt
@@ -174,6 +173,32 @@ export default function ConfigForm({
     })
     setFormData((prev) => ({ ...prev, prompt: newPrompt }))
     setPromptEdited(false)
+  }
+
+  const handleFocusChange = (focusItem: string) => {
+    setFormData((prev) => {
+      const newFocus = prev.focus.includes(focusItem)
+        ? prev.focus.filter((f) => f !== focusItem)
+        : [...prev.focus, focusItem]
+
+      const newPrompt = !promptEdited
+        ? buildFullPrompt(prev.prompt_language, prev.role, {
+            modify_files: prev.modify_files,
+            plan_first: prev.plan_first,
+            run_commands: prev.run_commands,
+            make_commit: prev.make_commit,
+            mention_ai: prev.mention_ai,
+            focus: newFocus,
+            max_tokens: prev.max_tokens,
+          })
+        : prev.prompt
+
+      return {
+        ...prev,
+        focus: newFocus,
+        prompt: newPrompt,
+      }
+    })
   }
 
   return (
@@ -275,24 +300,27 @@ export default function ConfigForm({
       </div>
 
       <div>
-        <label htmlFor="focus" className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
           Focus / Context *
         </label>
-        <select
-          id="focus"
-          name="focus"
-          value={formData.focus}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border px-3 py-2"
-        >
+        <div className="space-y-2 bg-gray-50 p-4 rounded-lg">
           {FOCUS_OPTIONS.map((focus) => (
-            <option key={focus} value={focus}>
-              {focus}
-            </option>
+            <div key={focus} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`focus-${focus}`}
+                checked={formData.focus.includes(focus)}
+                onChange={() => handleFocusChange(focus)}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor={`focus-${focus}`} className="ml-3 text-sm text-gray-700">
+                {focus}
+              </label>
+            </div>
           ))}
-        </select>
+        </div>
         <p className="mt-2 text-xs text-gray-500">
-          Choose what the AI should focus on: Implementation, detailed explanations, architecture, testing, performance optimization, or security.
+          Select multiple focus areas. AI will address all selected concerns in the prompt.
         </p>
       </div>
 

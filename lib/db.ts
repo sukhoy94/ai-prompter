@@ -18,7 +18,13 @@ function loadConfigs(): PromptConfig[] {
     return []
   }
   const data = fs.readFileSync(dbPath, 'utf-8')
-  return JSON.parse(data)
+  const configs = JSON.parse(data)
+
+  // Migrate old focus string to array
+  return configs.map((config: any) => ({
+    ...config,
+    focus: Array.isArray(config.focus) ? config.focus : [config.focus || 'Explanation']
+  }))
 }
 
 function saveConfigs(configs: PromptConfig[]) {

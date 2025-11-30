@@ -6,7 +6,7 @@ export interface PromptConfig {
   prompt_language: string
   response_language: string
   max_tokens: number
-  focus: string
+  focus: string[]
   modify_files: boolean
   plan_first: boolean
   run_commands: boolean
