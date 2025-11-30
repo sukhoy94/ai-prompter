@@ -15,6 +15,11 @@ const ROLES = [
   'DevOps Engineer',
   'QA Engineer',
   'Project Manager',
+  'Data Engineer',
+  'Security Engineer',
+  'Mobile Developer',
+  'Database Administrator',
+  'Machine Learning Engineer',
 ]
 
 const PROMPT_LANGUAGES = ['English', 'Polish']
