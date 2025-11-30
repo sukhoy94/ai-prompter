@@ -1,9 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import ConfigList from '@/components/ConfigList'
 import type { PromptConfig } from '@/lib/types'
+
+const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
+  ssr: false,
+})
 
 export default function Home() {
   const [configs, setConfigs] = useState<PromptConfig[]>([])
@@ -35,26 +40,33 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900">AI Prompter</h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              AI Prompter
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
               Configure and manage AI agent prompts and execution settings
             </p>
           </div>
-          <Link
-            href="/create"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-medium"
-          >
-            + New Configuration
-          </Link>
+          <div className="flex gap-3 items-center">
+            <ThemeToggle />
+            <Link
+              href="/create"
+              className="bg-blue-600 dark:bg-blue-700 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 font-medium transition-colors"
+            >
+              + New Configuration
+            </Link>
+          </div>
         </div>
 
         {isLoading ? (
           <div className="text-center py-12">
-            <p className="text-gray-600">Loading configurations...</p>
+            <p className="text-gray-600 dark:text-gray-400">
+              Loading configurations...
+            </p>
           </div>
         ) : (
           <ConfigList configs={configs} onDelete={handleDelete} />
