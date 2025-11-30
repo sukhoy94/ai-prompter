@@ -26,18 +26,37 @@ A web application for configuring and managing AI agent prompts. Choose from 9 A
 ## Quick Start
 
 ### Prerequisites
-- Docker and Docker Compose
-- Node.js 20+ (if running locally without Docker)
+- Node.js 20+
+- Docker and Docker Compose (for containerized version)
 
-### Running with Docker (Recommended)
+### Option 1: Desktop App (macOS) 🖥️
+
+```bash
+# Install dependencies
+npm install
+
+# Run Electron app
+npm run electron-dev
+```
+
+This launches AI Prompter as a native macOS application with Next.js server running in the background.
+
+**Or install to Applications folder:**
+```bash
+cd dist-app
+./install.sh
+# Then launch from Applications or Spotlight
+```
+
+### Option 2: Web App (Docker) 🐳
 
 ```bash
 docker-compose up --build
 ```
 
-The application will be available at `http://localhost:3000`
+Visit `http://localhost:3000` in your browser.
 
-### Running Locally
+### Option 3: Local Web App
 
 ```bash
 # Install dependencies
@@ -55,10 +74,33 @@ Visit `http://localhost:3000` in your browser.
 
 ## Technology Stack
 
-- Next.js 15.5 • React 19 • TypeScript
-- Tailwind CSS • Node.js 20
-- Docker & Docker Compose
-- JSON-based storage
+- **Frontend**: Next.js 15.5 • React 19 • TypeScript • Tailwind CSS
+- **Backend**: Node.js 20 • Next.js API Routes
+- **Desktop**: Electron 39 (optional)
+- **Containerization**: Docker & Docker Compose
+- **Storage**: JSON-based (no database needed)
+- **Build Tools**: electron-builder, webpack
+
+## Available Scripts
+
+```bash
+# Development
+npm run dev              # Next.js dev server
+npm run electron-dev    # Electron app with hot-reload
+
+# Production
+npm run build           # Build Next.js
+npm run start          # Start Next.js production server
+npm run electron-build-mac    # Build macOS .dmg (requires fix)
+npm run electron-build-linux  # Build Linux AppImage
+
+# Docker
+docker-compose up       # Start web app in Docker
+docker-compose down     # Stop and remove containers
+
+# Quality
+npm run lint           # Run ESLint
+```
 
 ## License
 

@@ -1,27 +1,76 @@
 {
   "name": "ai-prompter",
   "version": "0.1.0",
+  "description": "Web application for configuring AI agent prompts",
+  "author": "AI Prompter Team",
   "private": true,
+  "main": "electron/main.js",
+  "homepage": "./",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && npm run electron\"",
+    "electron-build": "npm run build && electron-builder",
+    "electron-build-mac": "npm run build && electron-builder -m",
+    "electron-build-linux": "npm run build && electron-builder -l",
+    "electron-build-all": "npm run build && electron-builder -mwl"
   },
   "dependencies": {
+    "next": "^15.0.3",
     "react": "^19.0.0-rc-66855b96-20241106",
-    "react-dom": "^19.0.0-rc-66855b96-20241106",
-    "next": "^15.0.3"
+    "react-dom": "^19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
-    "typescript": "^5.3.3",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
+    "concurrently": "^9.2.1",
+    "electron": "^39.2.4",
+    "electron-builder": "^26.0.12",
+    "electron-is-dev": "^3.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^15.0.3",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^15.0.3"
+    "typescript": "^5.3.3",
+    "wait-on": "^9.0.3"
+  },
+  "build": {
+    "appId": "com.ai-prompter.app",
+    "productName": "AI Prompter",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "files": [
+      ".next/**/*",
+      "public/**/*",
+      "electron/main.js",
+      "package.json",
+      "package-lock.json",
+      "data/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/@img/sharp-darwin-arm64"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    }
+  },
+  "optionalDependencies": {
+    "@img/sharp-darwin-arm64": "^0.34.5"
   }
 }
