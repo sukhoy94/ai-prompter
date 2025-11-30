@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import ConfigList from '@/components/ConfigList'
+import AIAgents from '@/components/AIAgents'
 import type { PromptConfig } from '@/lib/types'
 
 const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
@@ -69,7 +70,10 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          <ConfigList configs={configs} onDelete={handleDelete} />
+          <>
+            <ConfigList configs={configs} onDelete={handleDelete} />
+            <AIAgents />
+          </>
         )}
       </div>
     </main>
