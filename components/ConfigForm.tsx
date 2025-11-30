@@ -10,6 +10,7 @@ const ROLES = [
   'Engineer',
   'PHP Developer',
   'Laravel Developer',
+  'Symfony Developer',
   'Frontend Developer',
   'Backend Developer',
   'DevOps Engineer',
