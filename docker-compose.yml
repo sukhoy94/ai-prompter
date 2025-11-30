@@ -6,10 +6,17 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     volumes:
       - ./data:/app/data
+      - ./app:/app/app
+      - ./components:/app/components
+      - ./lib:/app/lib
+      - ./public:/app/public
+      - /app/node_modules
+      - /app/.next
     restart: unless-stopped
+    command: npm run dev
 
 volumes:
   data:
